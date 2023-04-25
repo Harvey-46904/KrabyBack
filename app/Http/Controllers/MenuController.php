@@ -122,7 +122,7 @@ class MenuController extends Controller
         }
         else{
 
-        $guardar_restaurante=menu::findOrFail($menu);
+        $guardar_menu=menu::findOrFail($menu);
         
         $guardar_menu->id_categoria=$request->id_categoria;
         $guardar_menu->producto=$request->producto;

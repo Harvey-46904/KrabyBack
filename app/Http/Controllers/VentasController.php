@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\support\Facades\Validator;
 use App\Models\ventas;
 use Illuminate\Http\Request;
 
@@ -51,10 +51,12 @@ class VentasController extends Controller
             
             
         ];
+        
         $validator = Validator::make($request->all(), $guardar,  $messages);
        
         if ($validator->fails()) {
             return response(['Error de los datos'=>$validator->errors()]);
+            
         }
         else{
         $guardar_ventas=new ventas;
