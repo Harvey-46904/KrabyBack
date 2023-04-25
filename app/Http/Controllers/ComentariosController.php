@@ -1,10 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\support\Facades\Validator;
 use App\Models\Comentarios;
 use Illuminate\Http\Request;
-use Illuminate\support\Facades\Validator;
+
 
 class ComentariosController extends Controller
 {
@@ -38,13 +38,13 @@ class ComentariosController extends Controller
     public function store(Request $request)
     {
         $rules = [
-            'Id_comentarios' => 'required|string',
+            
             'Id_restaurante' => 'required|string',
             'Comentario' => 'required|string',
         ];
 
         $messages = [
-            'Id_comentarios.required' => 'Digité id comentario',
+            
             'Id_restaurante.required' => 'Digité id restaurante',
             'Comentario.required' => 'Digité comentario',
         ];
@@ -54,7 +54,7 @@ class ComentariosController extends Controller
             return response ( [ 'Error de los datos'=>$validator->errors() ] );
         } else {
             $agregar_comenta = new Comentarios;
-            $agregar_comenta->Id_comentarios = $request->Id_comentarios;
+            
             $agregar_comenta->Id_restaurante = $request->Id_restaurante;
             $agregar_comenta->Comentario = $request->Comentario;
             $agregar_comenta->save();
@@ -92,26 +92,28 @@ class ComentariosController extends Controller
      * @param  \App\Models\Comentarios  $comentarios
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Comentarios $comentarios)
+    public function update(Request $request, $comentarios)
     {
         $rules = [
-            'Id_comentarios' => 'required|string',
+            
             'Id_restaurante' => 'required|string',
             'Comentario' => 'required|string',
         ];
 
         $messages = [
-            'Id_comentarios.required' => 'Digité id comentario',
+            
             'Id_restaurante.required' => 'Digité id restaurante',
             'Comentario.required' => 'Digité comentario',
         ];
-
+        
         $validator = Validator::make( $request->all(), $rules, $messages );
-        if ( $validator->fails() ) {
-            return response ( [ 'Error de los datos'=>$validator->errors() ] );
+        
+        if ($validator->fails()) {
+            return response (['Error de los datos'=>$validator->errors()]);
+            
         } else {
-            $actualizar_usuario = Comentarios::findOrFail($comentarios);
-            $actualizar_comenta->Id_comentarios = $request->Id_comentarios;
+            $actualizar_comenta = Comentarios::findOrFail($comentarios);
+            
             $actualizar_comenta->Id_restaurante = $request->Id_restaurante;
             $actualizar_comenta->Comentario = $request->Comentario;
             $actualizar_comenta->save();
