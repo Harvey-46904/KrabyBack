@@ -17,3 +17,8 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::resource('comercial','CentroComercialesController',['except'=>['create','edit']]);
+Route::resource('menu','MenuController',['except'=>['create','edit']]);
+Route::resource('pedido','PedidosController',['except'=>['create','edit']]);
+Route::resource('restaurante','RestaurantesController',['except'=>['create','edit']]);
+Route::resource('venta','VentasController',['except'=>['create','edit']]);
