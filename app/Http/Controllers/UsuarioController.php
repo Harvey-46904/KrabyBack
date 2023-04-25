@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Usuario;
 use Illuminate\Http\Request;
+use Illuminate\support\Facades\Validator;
 
 class UsuarioController extends Controller
 {
@@ -14,7 +15,8 @@ class UsuarioController extends Controller
      */
     public function index()
     {
-        //
+        $adicion = Usuario::all();
+        return response(['data'=>$adicion]);
     }
 
     /**
@@ -35,7 +37,36 @@ class UsuarioController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $rules = [
+            'Id_usuario' => 'required|integer',
+            'Nombre' => 'required|string',
+            'Telefono' => 'required|string',
+            'Correo' => 'required|string',
+            'Direccion' => 'required|string',
+        ];
+
+        $messages = [
+            'Id_usuario.required' => 'Digite id usuario',
+            'Nombre.required' => 'Digité nombre',
+            'Telefono.required' => 'Digité teléfono',
+            'Correo.required' => 'Digité correo',
+            'Direccion.required' => 'Digité dirección',
+        ];
+
+        $validator = Validator::make( $request->all(), $rules, $messages );
+        if ( $validator->fails() ) {
+            return response ( [ 'Error de los datos'=>$validator->errors() ] );
+        } else {
+            $agregar_usuario = new Usuario;
+            $agregar_usuario->Id_usuario = $request->Id_usuario;
+            $agregar_usuario->Nombre = $request->Nombre;
+            $agregar_usuario->Telefono = $request->Telefono;
+            $agregar_usuario->Correo = $request->Correo;
+            $agregar_usuario->Direccion = $request->Direccion;
+            $agregar_usuario->save();
+            return response( [ 'data'=>'Agregado exitosamente' ] );
+        }
+
     }
 
     /**
@@ -44,9 +75,10 @@ class UsuarioController extends Controller
      * @param  \App\Models\Usuario  $usuario
      * @return \Illuminate\Http\Response
      */
-    public function show(Usuario $usuario)
+    public function show($usuario)
     {
-        //
+        $consultar = Usuario::findOrFail($usuario);
+        return response( [ 'data'=>'Dato buscado' ] );
     }
 
     /**
@@ -69,7 +101,35 @@ class UsuarioController extends Controller
      */
     public function update(Request $request, Usuario $usuario)
     {
-        //
+        $rules = [
+            'Id_usuario' => 'required|integer',
+            'Nombre' => 'required|string',
+            'Telefono' => 'required|string',
+            'Correo' => 'required|string',
+            'Direccion' => 'required|string',
+        ];
+
+        $messages = [
+            'Id_usuario' => 'required|integer',
+            'Nombre.required' => 'Digité nombre',
+            'Telefono.required' => 'Digité teléfono',
+            'Correo.required' => 'Digité correo',
+            'Direccion.required' => 'Digité dirección',
+        ];
+
+        $validator = Validator::make( $request->all(), $rules, $messages );
+        if ( $validator->fails() ) {
+            return response ( [ 'Error de los datos'=>$validator->errors() ] );
+        } else {
+            $actualizar_usuario = Usuario::findOrFail($usuario);
+            $actualizar_usuario->Id_usuario = $request->Id_usuario;
+            $actualizar_usuario->Nombre = $request->Nombre;
+            $actualizar_usuario->Telefono = $request->Telefono;
+            $actualizar_usuario->Correo = $request->Correo;
+            $actualizar_usuario->Direccion = $request->Direccion;
+            $actualizar_usuario->save();
+            return response( [ 'data'=>'Registro actualizado exitosamente' ] );
+        }
     }
 
     /**
@@ -78,8 +138,10 @@ class UsuarioController extends Controller
      * @param  \App\Models\Usuario  $usuario
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Usuario $usuario)
+    public function destroy($usuario)
     {
-        //
+        $usuario = Usuario::findOrFail($usuario);
+        $usuario->delete();
+        return response( [ 'data'=> 'Eliminado exitosamente' ] );
     }
 }
