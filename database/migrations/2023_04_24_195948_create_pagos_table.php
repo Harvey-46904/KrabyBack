@@ -14,7 +14,6 @@ class CreatePagosTable extends Migration
     public function up()
     {
         Schema::create('pagos', function (Blueprint $table) {
-            $table->integer("Id_pagos");
             $table->integer("Id_pedido");
             $table->string("Monto");
             $table->string("Estado");

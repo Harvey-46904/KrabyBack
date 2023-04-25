@@ -14,7 +14,6 @@ class CreatePublicidadsTable extends Migration
     public function up()
     {
         Schema::create('publicidads', function (Blueprint $table) {
-            $table->integer("Id_publicidad");
             $table->string("Nombre_publicidad");
             $table->timestamps();
         });

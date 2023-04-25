@@ -38,7 +38,6 @@ class UsuarioController extends Controller
     public function store(Request $request)
     {
         $rules = [
-            'Id_usuario' => 'required|integer',
             'Nombre' => 'required|string',
             'Telefono' => 'required|string',
             'Correo' => 'required|string',
@@ -46,7 +45,6 @@ class UsuarioController extends Controller
         ];
 
         $messages = [
-            'Id_usuario.required' => 'Digite id usuario',
             'Nombre.required' => 'Digité nombre',
             'Telefono.required' => 'Digité teléfono',
             'Correo.required' => 'Digité correo',
@@ -58,7 +56,6 @@ class UsuarioController extends Controller
             return response ( [ 'Error de los datos'=>$validator->errors() ] );
         } else {
             $agregar_usuario = new Usuario;
-            $agregar_usuario->Id_usuario = $request->Id_usuario;
             $agregar_usuario->Nombre = $request->Nombre;
             $agregar_usuario->Telefono = $request->Telefono;
             $agregar_usuario->Correo = $request->Correo;
@@ -99,10 +96,9 @@ class UsuarioController extends Controller
      * @param  \App\Models\Usuario  $usuario
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Usuario $usuario)
+    public function update(Request $request, $usuario)
     {
         $rules = [
-            'Id_usuario' => 'required|integer',
             'Nombre' => 'required|string',
             'Telefono' => 'required|string',
             'Correo' => 'required|string',
@@ -110,7 +106,6 @@ class UsuarioController extends Controller
         ];
 
         $messages = [
-            'Id_usuario' => 'required|integer',
             'Nombre.required' => 'Digité nombre',
             'Telefono.required' => 'Digité teléfono',
             'Correo.required' => 'Digité correo',
@@ -122,7 +117,6 @@ class UsuarioController extends Controller
             return response ( [ 'Error de los datos'=>$validator->errors() ] );
         } else {
             $actualizar_usuario = Usuario::findOrFail($usuario);
-            $actualizar_usuario->Id_usuario = $request->Id_usuario;
             $actualizar_usuario->Nombre = $request->Nombre;
             $actualizar_usuario->Telefono = $request->Telefono;
             $actualizar_usuario->Correo = $request->Correo;

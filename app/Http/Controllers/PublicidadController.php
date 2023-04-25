@@ -38,12 +38,10 @@ class PublicidadController extends Controller
     public function store(Request $request)
     {
         $rules = [
-            'Id_publicidad' => 'required|string',
             'Nombre_publicidad' => 'required|string',
         ];
 
         $messages = [
-            'Id_publicidad.required' => 'Digité id publicidad',
             'Nombre_publicidad.required' => 'Digité nombre publicidad',
         ];
 
@@ -52,7 +50,6 @@ class PublicidadController extends Controller
             return response ( [ 'Error de los datos'=>$validator->errors() ] );
         } else {
             $agregar_publicidad = new Publicidad;
-            $agregar_publicidad->Id_publicidad = $request->Id_publicidad;
             $agregar_publicidad->Nombre_publicidad = $request->Nombre_publicidad;
             $agregar_publicidad->save();
             return response( [ 'data'=>'Agregado exitosamente' ] );
@@ -89,15 +86,13 @@ class PublicidadController extends Controller
      * @param  \App\Models\Publicidad  $publicidad
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Publicidad $publicidad)
+    public function update(Request $request, $publicidad)
     {
         $rules = [
-            'Id_publicidad' => 'required|string',
             'Nombre_publicidad' => 'required|string',
         ];
 
         $messages = [
-            'Id_publicidad.required' => 'Digité id publicidad',
             'Nombre_publicidad.required' => 'Digité nombre publicidad',
         ];
 
@@ -106,7 +101,6 @@ class PublicidadController extends Controller
             return response ( [ 'Error de los datos'=>$validator->errors() ] );
         } else {
             $actualizar_publicidad = Publicidad::findOrFail($publicidad);
-            $actualizar_publicidad->Id_publicidad = $request->Id_publicidad;
             $actualizar_publicidad->Nombre_publicidad = $request->Nombre_publicidad;
             $actualizar_publicidad->save();
             return response( [ 'data'=>'Actualizado exitosamente' ] );
