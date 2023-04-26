@@ -23,6 +23,8 @@ Route::resource('comentarios', 'ComentariosController',['except'=>['create','edi
 Route::resource('categorias', 'CategoriasController',['except'=>['create','edit']]);
 Route::resource('publicidad', 'PublicidadController',['except'=>['create','edit']]);
 Route::resource('pagos', 'PagosController',['except'=>['create','edit']]);
+
+
 Route::resource('comercial','CentroComercialesController',['except'=>['create','edit']]);
 Route::resource('menu','MenuController',['except'=>['create','edit']]);
 Route::resource('pedido','PedidosController',['except'=>['create','edit']]);

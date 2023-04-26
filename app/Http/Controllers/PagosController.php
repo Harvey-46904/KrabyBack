@@ -38,6 +38,7 @@ class PagosController extends Controller
     public function store(Request $request)
     {
         $rules = [
+           
             'Id_pedido' => 'required|string',
             'Monto' => 'required|string',
             'Estado' => 'required|string',
@@ -45,6 +46,7 @@ class PagosController extends Controller
         ];
 
         $messages = [
+            
             'Id_pedido.required' => 'Digité id pedido',
             'Monto.required' => 'Digité el monto',
             'Estado.required' => 'Digité el estado',
@@ -55,6 +57,7 @@ class PagosController extends Controller
             return response ( [ 'Error de los datos'=>$validator->errors() ] );
         } else {
             $agregar_pagos = new Pagos;
+           
             $agregar_pagos->Id_pedido = $request->Id_pedido;
             $agregar_pagos->Monto = $request->Monto;
             $agregar_pagos->Estado = $request->Estado;
@@ -93,9 +96,10 @@ class PagosController extends Controller
      * @param  \App\Models\Pagos  $pagos
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $pagos)
+    public function update(Request $request,$pagos)
     {
         $rules = [
+           
             'Id_pedido' => 'required|string',
             'Monto' => 'required|string',
             'Estado' => 'required|string',
@@ -103,6 +107,7 @@ class PagosController extends Controller
         ];
 
         $messages = [
+            
             'Id_pedido.required' => 'Digité id pedido',
             'Monto.required' => 'Digité el monto',
             'Estado.required' => 'Digité el estado',
@@ -113,6 +118,7 @@ class PagosController extends Controller
             return response ( [ 'Error de los datos'=>$validator->errors() ] );
         } else {
             $actualizar_pagos = Pagos::findOrFail($pagos);
+           
             $actualizar_pagos->Id_pedido = $request->Id_pedido;
             $actualizar_pagos->Monto = $request->Monto;
             $actualizar_pagos->Estado = $request->Estado;
