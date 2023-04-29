@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCentroComercialesTable extends Migration
+class CreateTarjetasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,14 @@ class CreateCentroComercialesTable extends Migration
      */
     public function up()
     {
-        Schema::create('centro_comerciales', function (Blueprint $table) {
+        Schema::create('tarjetas', function (Blueprint $table) {
             $table->id();
-            $table->string("nombre_centro_comercial");
-            $table->string("direccion");
-            $table->string("telefono");
-            $table->string("correo");
-            $table->string("ubicacion");
+            $table->integer("id_usuario");
+            $table->string("nombre");
+            $table->string("apellido");
+            $table->string("numero_tarjeta");
+            $table->string("fecha_expedicion");
+            $table->string("tipo_tajeta");
             $table->timestamps();
         });
     }
@@ -31,6 +32,6 @@ class CreateCentroComercialesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('centro_comerciales');
+        Schema::dropIfExists('tarjetas');
     }
 }

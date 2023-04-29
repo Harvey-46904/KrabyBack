@@ -37,6 +37,7 @@ class MenuController extends Controller
     public function store(Request $request)
     {
         $guardar = [
+            'idrestaurante' => 'required | string',
             'id_categoria' => 'required | string',
             'producto' => 'required | string',
             'is_menu_dia' => 'required | string',
@@ -45,6 +46,7 @@ class MenuController extends Controller
          ];
 
          $messages = [
+            'idrestaurante'  => 'The :attribute and :other must match.',
             'id_categoria'  => 'The :attribute and :other must match.',
             'producto' => 'The :attribute must be exactly :size.',
             'is_menu_dia' => 'The :attribute value :input is not between :min - :max.',
@@ -59,6 +61,7 @@ class MenuController extends Controller
         }
         else{
         $guardar_menu=new menu;
+        $guardar_menu->idrestaurante=$request->idrestaurante;
         $guardar_menu->id_categoria=$request->id_categoria;
         $guardar_menu->producto=$request->producto;
         $guardar_menu->is_menu_dia=$request->is_menu_dia;

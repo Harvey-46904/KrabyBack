@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use DB;
 use App\Models\Usuario;
 use Illuminate\Http\Request;
 use Illuminate\support\Facades\Validator;
@@ -144,4 +144,27 @@ class UsuarioController extends Controller
         $usuario->delete();
         return response( [ 'data'=> 'Eliminado exitosamente' ] );
     }
+
+    public function inicioSesion(Request $request){
+        $rules = [
+        'Telefono' => 'required|string',
+        ];
+        $messages = [
+        'Telefono.required' => 'Digité teléfono',
+        ];
+        $validator = Validator::make( $request->all(), $rules, $messages );
+        if ( $validator->fails() ) {
+            return response ( [ 'Error de los datos'=>$validator->errors() ] );
+        } else {
+        $Telefono = $request->Telefono;
+        //return response (["data"=>$consulta]);
+        $sesion = DB::table('usuarios')->select("usuarios.Nombre","usuarios.Telefono","usuarios.Correo","usuarios.Direccion")
+        ->where("usuarios.Telefono","=",$Telefono)
+        ->get();
+
+       return response (["data"=>[
+                    "usuario"=>count($sesion)==0?"usuario no disponible":$sesion,
+        ]]);
+    }
+}
 }

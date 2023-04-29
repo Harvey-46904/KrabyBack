@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCentroComercialesTable extends Migration
+class CreateCalificacionesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,10 @@ class CreateCentroComercialesTable extends Migration
      */
     public function up()
     {
-        Schema::create('centro_comerciales', function (Blueprint $table) {
+        Schema::create('calificaciones', function (Blueprint $table) {
             $table->id();
-            $table->string("nombre_centro_comercial");
-            $table->string("direccion");
-            $table->string("telefono");
-            $table->string("correo");
-            $table->string("ubicacion");
+            $table->integer("id_restaurante");
+            $table->float("calificacion", 8, 2);
             $table->timestamps();
         });
     }
@@ -31,6 +28,6 @@ class CreateCentroComercialesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('centro_comerciales');
+        Schema::dropIfExists('calificaciones');
     }
 }
