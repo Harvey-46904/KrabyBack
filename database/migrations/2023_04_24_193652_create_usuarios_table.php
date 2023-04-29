@@ -16,9 +16,13 @@ class CreateUsuariosTable extends Migration
         Schema::create('usuarios', function (Blueprint $table) {
             $table->id();
             $table->string("Nombre");
-            $table->string("Telefono");
-            $table->string("Correo");
-            $table->string("Direccion");
+            $table->string("Apellido");
+            $table->string("Tipo_identificacion");
+            $table->string("Celular");
+            $table->string("Ciudad");
+            $table->string("Correo_electronico");
+
+
             $table->timestamps();
         });
     }

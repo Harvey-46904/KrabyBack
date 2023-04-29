@@ -23,10 +23,14 @@ Route::resource('comentarios', 'ComentariosController',['except'=>['create','edi
 Route::resource('categorias', 'CategoriasController',['except'=>['create','edit']]);
 Route::resource('publicidad', 'PublicidadController',['except'=>['create','edit']]);
 Route::resource('pagos', 'PagosController',['except'=>['create','edit']]);
-
-
 Route::resource('comercial','CentroComercialesController',['except'=>['create','edit']]);
 Route::resource('menu','MenuController',['except'=>['create','edit']]);
 Route::resource('pedido','PedidosController',['except'=>['create','edit']]);
 Route::resource('restaurante','RestaurantesController',['except'=>['create','edit']]);
 Route::resource('venta','VentasController',['except'=>['create','edit']]);
+Route::resource('notificaciones','NotificacionesController',['except'=>['create','edit']]);
+Route::get('publico','CentroComercialesController@publicidad',['except'=>['create','edit']]);
+Route::get('grid','CentroComercialesController@todos_comerciales',['except'=>['create','edit']]);
+Route::get("grid/{id_rest}",'CentroComercialesController@restaurante');
+Route::get("filtro/{id_fil}",'MenuController@filtrar');
+Route::post("crear_nota",'NotificacionesController@notificacion');
