@@ -7,5 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Clientes extends Model
 {
-    use HasFactory;
+    use HasApiTokens, HasFactory, Notifiable ,HasRoles;
 }

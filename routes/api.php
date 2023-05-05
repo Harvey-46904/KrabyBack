@@ -20,3 +20,17 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 Route::resource('cliente','ClientesController',['except'=>['create','edit']]);
+
+
+Route::get('wasap',"UsuarioController@soporte_wasap");
+Route::get('home/{id_saludo}',"ClientesController@home");
+Route::get('home',"ClientesController@todos");
+Route::post("Registro","UsuarioController@store");
+Route::post("acceso","ClientesController@acceso");
+
+
+
+Route::group(['middleware'=>['auth:sanctum']],function(){
+    Route::post("salir","ClientesController@salir");
+    Route::resource('cliente','ClientesController',['except'=>['create','edit']]);
+});
