@@ -24,6 +24,7 @@ Route::resource('categorias', 'CategoriasController',['except'=>['create','edit'
 Route::resource('publicidad', 'PublicidadController',['except'=>['create','edit']]);
 Route::resource('pagos', 'PagosController',['except'=>['create','edit']]);
 
+Route::resource('carrito','CarritoController',['except'=>['create','edit']]);
 Route::resource('tarjetas','TarjetasController',['except'=>['create','edit']]);
 Route::resource('comercial','CentroComercialesController',['except'=>['create','edit']]);
 Route::resource('calificacion','CalificacionesController',['except'=>['create','edit']]);
@@ -33,3 +34,4 @@ Route::resource('restaurante','RestaurantesController',['except'=>['create','edi
 Route::resource('venta','VentasController',['except'=>['create','edit']]);
 Route::get('menurestaurante/{id}','RestaurantesController@cons_menu');
 Route::post('sesion','UsuarioController@inicioSesion');
+Route::get('lista_restaurantes_centro_comercial/{id_centro_comercial}','RestaurantesController@lista_resutarantes_centro_comercial');

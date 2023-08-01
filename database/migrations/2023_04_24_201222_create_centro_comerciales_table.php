@@ -20,6 +20,8 @@ class CreateCentroComercialesTable extends Migration
             $table->string("telefono");
             $table->string("correo");
             $table->string("ubicacion");
+            $table->string("imagen");
+
             $table->timestamps();
         });
     }

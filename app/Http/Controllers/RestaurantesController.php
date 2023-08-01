@@ -15,7 +15,7 @@ class RestaurantesController extends Controller
     public function index()
     {
         $consulta=restaurantes::all();
-        return response (["data"=>$consulta]);
+        return response ($consulta);
     }
 
     /**
@@ -92,8 +92,8 @@ class RestaurantesController extends Controller
      */
     public function show($restaurantes)
     {
-        $restaurante=restaurantes::findOrFail($restaurantes);
-        return response (["data"=>$restaurante]);
+        $restaurante=restaurantes::findOrFail($restaurantes)->get();
+        return response ($restaurante);
     }
 
     /**
@@ -181,7 +181,7 @@ class RestaurantesController extends Controller
        $restauranMenus = DB::table('restaurantes')->select("nombre_restaurante","foto_baner")
         ->where("restaurantes.id","=",$menu)
         ->get();
-        $menus = DB::table('menus')->select("producto")
+        $menus = DB::table('menus')->select("producto","imagen_menu", "precio", "id")
         ->where("menus.idrestaurante","=",$menu)
         ->get();
         $descrip = DB::table('restaurantes')->select("descripcion","horario","ubicacion")
@@ -201,33 +201,37 @@ class RestaurantesController extends Controller
         ->where("calificaciones.id_restaurante","=",$menu)
         ->avg('calificacion');
         //$promedio = DB::table('restaurantes')->avg('calificacion');
+        return response  ($menus);
+        //return response ([$restauranMenus,count($menus)==0?"Menu No disponible":$menus,$descrip,count($comentario)==0?"Comentario No disponible":$comentario,$calificcion]);
 
-        
+          /*  return response (
 
-            return response (
-
-                ["data"=>[
-                    "informacion restaurante"=>$restauranMenus,
-                    "menu"=>count($menus)==0?"Menu No disponible":$menus,
+                [[
+                    $restauranMenus,
+                    count($menus)==0?"Menu No disponible":$menus,
                     
                 ],
                 [
-                    "descripcion"=>$descrip
+                    $descrip
                 ],
                
                 [
                     
-                    "comentario"=>count($comentario)==0?"Comentario No disponible":$comentario,
+                    count($comentario)==0?"Comentario No disponible":$comentario,
                     
                 ],
                 [
-                    "calificacion restaurante"=>$calificcion
+                    $calificcion
                 ]
                 ]
-            );
+            );*/
         
         
         
        
+    }
+    public function lista_resutarantes_centro_comercial($id_centro_comercial){
+        $consulta=DB::table("restaurantes")->select("id","nombre_restaurante","foto_baner","horario","descripcion")->where("id_centro_comercial","=",$id_centro_comercial)->get();
+        return response($consulta);
     }
 }

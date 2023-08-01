@@ -33,32 +33,33 @@ class TarjetasController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
+     
      */
+    function visaomastercard($numtarjeta) {
+        $tipot="";
+        $numt = substr($numtarjeta, 0, 1);
+        if ($numt == 4) {
+            $tipot="visa";
+           
+            
+        } else if ($numt == 5) {
+            $tipot="mastercard";
+            
+        } 
+        return $tipot;
+    }
     public function store(Request $request)
     {
-        $tipot="";
+        
+        //parent::boot();
+       $tipot="";
         $guardar = [
            
             'id_usuario' => 'required | integer',
             'nombre' => 'required | string',
             'apellido' => 'required | string',
-            'numero_tarjeta' => [
+            'numero_tarjeta' => 
                 'required', 'string',
-                function($atributo, $valor, $fallo) {
-                    $numt = substr($valor, 0, 1);
-                    if ($numt == 4) {
-                        $tipot="visa";
-                       
-                        
-                    } else if ($numt == 5) {
-                        $tipot="mastercard";
-                        
-                    } else {
-                        
-                        $fallo('El número de tarjeta ingresado no es válido. Debe ser Visa o Mastercard.');
-                    }
-                }
-            ],
              
             'fecha_expedicion' => 'required | string',
             
@@ -80,19 +81,21 @@ class TarjetasController extends Controller
            
         }
         else{
+        $tipot=self::visaomastercard($request->numero_tarjeta);
         $guardar_tarjeta=new tarjetas;
         $guardar_tarjeta->id_usuario=$request->id_usuario;
         $guardar_tarjeta->nombre=$request->nombre;
         $guardar_tarjeta->apellido=$request->apellido;
         $guardar_tarjeta->numero_tarjeta=$request->numero_tarjeta;
         $guardar_tarjeta->fecha_expedicion=$request->fecha_expedicion;
-        $guardar_tarjeta->tipo_tajeta=$tipot;
+        $guardar_tarjeta->tipo_tajeta= $tipot;
         $guardar_tarjeta->save();
         return response(["data"=>"guardado exitosamente"]);
         
     }
     }
 
+    
     /**
      * Display the specified resource.
      *

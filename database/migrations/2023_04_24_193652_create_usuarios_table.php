@@ -19,6 +19,8 @@ class CreateUsuariosTable extends Migration
             $table->string("Telefono");
             $table->string("Correo");
             $table->string("Direccion");
+            $table->string("Tipo_documento");
+            $table->string("Ciudad");
             $table->timestamps();
         });
     }

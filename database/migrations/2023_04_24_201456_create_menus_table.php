@@ -19,7 +19,10 @@ class CreateMenusTable extends Migration
             $table->integer("id_categoria");
             $table->string("producto");
             $table->string("is_menu_dia");
+            $table->integer("precio");
+            $table->string("imagen_menu");
             $table->timestamps();
+
         });
     }
 
