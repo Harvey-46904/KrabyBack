@@ -15,10 +15,14 @@ class CreateRestaurantesTable extends Migration
     {
         Schema::create('restaurantes', function (Blueprint $table) {
             $table->id();
-            $table->string("id_centro_comercial");
-            $table->string("id_cliente");
+            $table->integer("id_centro_comercial");
             $table->string("nombre_restaurante");
             $table->string("foto_baner");
+            $table->string("descripcion");
+            $table->string("horario");
+            $table->string("ubicacion");
+           
+            $table->string("politicas");
             $table->timestamps();
         });
     }

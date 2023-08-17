@@ -16,7 +16,7 @@ class CentroComercialesController extends Controller
     {
         $consulta=centro_comerciales::all();
 
-        return response (["data"=>$consulta]);
+        return response ($consulta);
     }
 
     /**
@@ -43,6 +43,7 @@ class CentroComercialesController extends Controller
             'telefono' => 'required | string',
             'correo' => 'required | string',
             'ubicacion' => 'required | string',
+            'imagen' => 'required | string',
          ];
 
          $messages = [
@@ -51,6 +52,7 @@ class CentroComercialesController extends Controller
             'telefono' => 'The :attribute value :input is not between :min - :max.',
             'correo'=> 'The :attribute must be one of the following types: :values',
             'ubicacion'=> 'The :attribute must be one of the following types: :values',
+            'imagen'=> 'The :attribute must be one of the following types: :values',
         ];
        
        
@@ -67,6 +69,7 @@ class CentroComercialesController extends Controller
         $guardar_centro->telefono=$request->telefono;
         $guardar_centro->correo=$request->correo;
         $guardar_centro->ubicacion=$request->ubicacion;
+        $guardar_centro->imagen=$request->imagen;
         $guardar_centro->save();
         return response(["data"=>"guardado exitosamente"]);
     }
@@ -111,6 +114,7 @@ class CentroComercialesController extends Controller
             'telefono' => 'required | string',
             'correo' => 'required | string',
             'ubicacion' => 'required | string',
+            'imagen' => 'required | string',
          ];
 
          $messages = [
@@ -119,6 +123,7 @@ class CentroComercialesController extends Controller
             'telefono' => 'The :attribute value :input is not between :min - :max.',
             'correo'=> 'The :attribute must be one of the following types: :values',
             'ubicacion'=> 'The :attribute must be one of the following types: :values',
+            'imagen'=> 'The :attribute must be one of the following types: :values',
         ];
        
        
@@ -136,6 +141,7 @@ class CentroComercialesController extends Controller
         $guardar_centro->telefono=$request->telefono;
         $guardar_centro->correo=$request->correo;
         $guardar_centro->ubicacion=$request->ubicacion;
+        $guardar_centro->imagen=$request->imagen;
         $guardar_centro->save();
         return response(["data"=>"datos actualizados"]);
     }

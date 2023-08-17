@@ -15,7 +15,7 @@ class MenuController extends Controller
     public function index()
     {
         $consulta=menu::all();
-        return response (["data"=>$consulta]);
+        return response ($consulta);
     }
 
     /**
@@ -37,18 +37,24 @@ class MenuController extends Controller
     public function store(Request $request)
     {
         $guardar = [
+            'idrestaurante' => 'required | string',
             'id_categoria' => 'required | string',
             'producto' => 'required | string',
             'is_menu_dia' => 'required | string',
-            
+            'precio' => 'required | integer',
+            'imagen_menu' => 'required | string',
+            'descripcion' => 'required | string',
             
          ];
 
          $messages = [
+            'idrestaurante'  => 'The :attribute and :other must match.',
             'id_categoria'  => 'The :attribute and :other must match.',
             'producto' => 'The :attribute must be exactly :size.',
             'is_menu_dia' => 'The :attribute value :input is not between :min - :max.',
-            
+            'precio' => 'The :attribute must be exactly :size.',
+            'imagen_menu'=> 'The :attribute must be one of the following types: :values',
+            'descripcion'=> 'The :attribute must be one of the following types: :values',
             
         ];
 
@@ -59,10 +65,13 @@ class MenuController extends Controller
         }
         else{
         $guardar_menu=new menu;
+        $guardar_menu->idrestaurante=$request->idrestaurante;
         $guardar_menu->id_categoria=$request->id_categoria;
         $guardar_menu->producto=$request->producto;
         $guardar_menu->is_menu_dia=$request->is_menu_dia;
-        
+        $guardar_menu->precio=$request->precio;
+        $guardar_menu->imagen_menu=$request->imagen_menu;
+        $guardar_menu->descripcion=$request->descripcion;
         $guardar_menu->save();
         return response(["data"=>"guardado exitosamente"]);
     }
@@ -104,7 +113,9 @@ class MenuController extends Controller
             'id_categoria' => 'required | string',
             'producto' => 'required | string',
             'is_menu_dia' => 'required | string',
-            
+            'precio' => 'required | integer',
+            'imagen_menu' => 'required | string',
+            'descripcion' => 'required | string',
             
          ];
 
@@ -112,7 +123,9 @@ class MenuController extends Controller
             'id_categoria'  => 'The :attribute and :other must match.',
             'producto' => 'The :attribute must be exactly :size.',
             'is_menu_dia' => 'The :attribute value :input is not between :min - :max.',
-            
+            'precio' => 'The :attribute must be exactly :size.',
+            'imagen_menu'=> 'The :attribute must be one of the following types: :values',
+            'descripcion'=> 'The :attribute must be one of the following types: :values',
             
         ];
 
@@ -127,7 +140,9 @@ class MenuController extends Controller
         $guardar_menu->id_categoria=$request->id_categoria;
         $guardar_menu->producto=$request->producto;
         $guardar_menu->is_menu_dia=$request->is_menu_dia;
-        
+        $guardar_menu->precio=$request->precio;
+        $guardar_menu->imagen_menu=$request->imagen_menu;
+        $guardar_menu->descripcion=$request->descripcion;
         $guardar_menu->save();
         return response(["data"=>"datos actualizados"]);
     }

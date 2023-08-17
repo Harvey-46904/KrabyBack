@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use DB;
 use App\Models\Usuario;
 use Illuminate\Http\Request;
 use Illuminate\support\Facades\Validator;
@@ -16,7 +16,7 @@ class UsuarioController extends Controller
     public function index()
     {
         $adicion = Usuario::all();
-        return response(['data'=>$adicion]);
+        return response([$adicion]);
     }
 
     /**
@@ -43,6 +43,8 @@ class UsuarioController extends Controller
             'Telefono' => 'required|string',
             'Correo' => 'required|string',
             'Direccion' => 'required|string',
+            'Tipo_documento' => 'required|string',
+            'Ciudad' => 'required|string',
         ];
 
         $messages = [
@@ -51,6 +53,9 @@ class UsuarioController extends Controller
             'Telefono.required' => 'Digité teléfono',
             'Correo.required' => 'Digité correo',
             'Direccion.required' => 'Digité dirección',
+            'Tipo_documento.required' => 'Digité Tipo de Documento',
+            'Ciudad.required' => 'Digité Ciudad',
+            
         ];
 
         $validator = Validator::make( $request->all(), $rules, $messages );
@@ -63,6 +68,8 @@ class UsuarioController extends Controller
             $agregar_usuario->Telefono = $request->Telefono;
             $agregar_usuario->Correo = $request->Correo;
             $agregar_usuario->Direccion = $request->Direccion;
+            $agregar_usuario->Tipo_documento = $request->Tipo_documento;
+            $agregar_usuario->Ciudad = $request->Ciudad;
             $agregar_usuario->save();
             return response( [ 'data'=>'Agregado exitosamente' ] );
         }
@@ -107,6 +114,8 @@ class UsuarioController extends Controller
             'Telefono' => 'required|string',
             'Correo' => 'required|string',
             'Direccion' => 'required|string',
+            'Tipo_documento' => 'required|string',
+            'Ciudad' => 'required|string',
         ];
 
         $messages = [
@@ -115,6 +124,8 @@ class UsuarioController extends Controller
             'Telefono.required' => 'Digité teléfono',
             'Correo.required' => 'Digité correo',
             'Direccion.required' => 'Digité dirección',
+            'Tipo_documento.required' => 'Digité Tipo de Documento',
+            'Ciudad.required' => 'Digité Ciudad',
         ];
 
         $validator = Validator::make( $request->all(), $rules, $messages );
@@ -127,6 +138,8 @@ class UsuarioController extends Controller
             $actualizar_usuario->Telefono = $request->Telefono;
             $actualizar_usuario->Correo = $request->Correo;
             $actualizar_usuario->Direccion = $request->Direccion;
+            $actualizar_usuario->Tipo_documento = $request->Tipo_documento;
+            $actualizar_usuario->Ciudad = $request->Ciudad;
             $actualizar_usuario->save();
             return response( [ 'data'=>'Registro actualizado exitosamente' ] );
         }
@@ -144,4 +157,27 @@ class UsuarioController extends Controller
         $usuario->delete();
         return response( [ 'data'=> 'Eliminado exitosamente' ] );
     }
+
+    public function inicioSesion(Request $request){
+        $rules = [
+        'Telefono' => 'required|string',
+        ];
+        $messages = [
+        'Telefono.required' => 'Digité teléfono',
+        ];
+        $validator = Validator::make( $request->all(), $rules, $messages );
+        if ( $validator->fails() ) {
+            return response ( [ 'Error de los datos'=>$validator->errors() ] );
+        } else {
+        $Telefono = $request->Telefono;
+        //return response (["data"=>$consulta]);
+        $sesion = DB::table('usuarios')->select("usuarios.Nombre","usuarios.Telefono","usuarios.Correo","usuarios.Direccion")
+        ->where("usuarios.Telefono","=",$Telefono)
+        ->get();
+
+       return response (["data"=>[
+                    "usuario"=>count($sesion)==0?"usuario no disponible":$sesion,
+        ]]);
+    }
+}
 }

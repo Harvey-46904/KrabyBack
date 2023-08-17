@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUsuariosTable extends Migration
+class CreateCalificacionesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,10 @@ class CreateUsuariosTable extends Migration
      */
     public function up()
     {
-        Schema::create('usuarios', function (Blueprint $table) {
+        Schema::create('calificaciones', function (Blueprint $table) {
             $table->id();
-            $table->string("Nombre");
-            $table->string("Telefono");
-            $table->string("Correo");
-            $table->string("Direccion");
-            $table->string("Tipo_documento");
-            $table->string("Ciudad");
+            $table->integer("id_restaurante");
+            $table->float("calificacion", 8, 2);
             $table->timestamps();
         });
     }
@@ -32,6 +28,6 @@ class CreateUsuariosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('usuarios');
+        Schema::dropIfExists('calificaciones');
     }
 }
