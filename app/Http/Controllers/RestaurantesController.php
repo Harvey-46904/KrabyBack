@@ -181,7 +181,7 @@ class RestaurantesController extends Controller
        $restauranMenus = DB::table('restaurantes')->select("nombre_restaurante","foto_baner")
         ->where("restaurantes.id","=",$menu)
         ->get();
-        $menus = DB::table('menus')->select("producto","imagen_menu", "precio", "id")
+        $menus = DB::table('menus')->select("producto","imagen_menu", "precio", "id", "descripcion")
         ->where("menus.idrestaurante","=",$menu)
         ->get();
         $descrip = DB::table('restaurantes')->select("descripcion","horario","ubicacion")

@@ -43,6 +43,7 @@ class MenuController extends Controller
             'is_menu_dia' => 'required | string',
             'precio' => 'required | integer',
             'imagen_menu' => 'required | string',
+            'descripcion' => 'required | string',
             
          ];
 
@@ -53,6 +54,7 @@ class MenuController extends Controller
             'is_menu_dia' => 'The :attribute value :input is not between :min - :max.',
             'precio' => 'The :attribute must be exactly :size.',
             'imagen_menu'=> 'The :attribute must be one of the following types: :values',
+            'descripcion'=> 'The :attribute must be one of the following types: :values',
             
         ];
 
@@ -69,6 +71,7 @@ class MenuController extends Controller
         $guardar_menu->is_menu_dia=$request->is_menu_dia;
         $guardar_menu->precio=$request->precio;
         $guardar_menu->imagen_menu=$request->imagen_menu;
+        $guardar_menu->descripcion=$request->descripcion;
         $guardar_menu->save();
         return response(["data"=>"guardado exitosamente"]);
     }
@@ -112,6 +115,7 @@ class MenuController extends Controller
             'is_menu_dia' => 'required | string',
             'precio' => 'required | integer',
             'imagen_menu' => 'required | string',
+            'descripcion' => 'required | string',
             
          ];
 
@@ -121,6 +125,7 @@ class MenuController extends Controller
             'is_menu_dia' => 'The :attribute value :input is not between :min - :max.',
             'precio' => 'The :attribute must be exactly :size.',
             'imagen_menu'=> 'The :attribute must be one of the following types: :values',
+            'descripcion'=> 'The :attribute must be one of the following types: :values',
             
         ];
 
@@ -137,6 +142,7 @@ class MenuController extends Controller
         $guardar_menu->is_menu_dia=$request->is_menu_dia;
         $guardar_menu->precio=$request->precio;
         $guardar_menu->imagen_menu=$request->imagen_menu;
+        $guardar_menu->descripcion=$request->descripcion;
         $guardar_menu->save();
         return response(["data"=>"datos actualizados"]);
     }

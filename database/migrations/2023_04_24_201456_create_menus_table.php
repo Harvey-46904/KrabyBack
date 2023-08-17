@@ -21,6 +21,7 @@ class CreateMenusTable extends Migration
             $table->string("is_menu_dia");
             $table->integer("precio");
             $table->string("imagen_menu");
+            $table->string("descripcion");
             $table->timestamps();
 
         });
