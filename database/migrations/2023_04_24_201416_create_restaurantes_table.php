@@ -18,6 +18,7 @@ class CreateRestaurantesTable extends Migration
             $table->integer("id_centro_comercial");
             $table->string("nombre_restaurante");
             $table->string("foto_baner");
+            $table->string("foto_principal");
             $table->string("descripcion");
             $table->string("horario");
             $table->string("ubicacion");

@@ -37,13 +37,17 @@ class CentroComercialesController extends Controller
      */
     public function store(Request $request)
     {
+      
+
+
+       // return response(["data"=>$request->all()]);
         $guardar = [
             'nombre_centro_comercial' => 'required | string',
             'direccion' => 'required | string',
             'telefono' => 'required | string',
             'correo' => 'required | string',
             'ubicacion' => 'required | string',
-            'imagen' => 'required | string',
+          
          ];
 
          $messages = [
@@ -52,7 +56,7 @@ class CentroComercialesController extends Controller
             'telefono' => 'The :attribute value :input is not between :min - :max.',
             'correo'=> 'The :attribute must be one of the following types: :values',
             'ubicacion'=> 'The :attribute must be one of the following types: :values',
-            'imagen'=> 'The :attribute must be one of the following types: :values',
+           
         ];
        
        
@@ -63,13 +67,19 @@ class CentroComercialesController extends Controller
             return response(['Error de los datos'=>$validator->errors()]);
         }
         else{
+
+            $ldate = date('Y-m-d-H_i_s');
+            $file = $request->file('imagen');
+            $nombre = $file->getClientOriginalName();
+            \Storage::disk('local')->put("/img_centros_comerciales/".$ldate.$nombre,  \File::get($file));
+
         $guardar_centro=new centro_comerciales;
         $guardar_centro->nombre_centro_comercial=$request->nombre_centro_comercial;
         $guardar_centro->direccion=$request->direccion;
         $guardar_centro->telefono=$request->telefono;
         $guardar_centro->correo=$request->correo;
         $guardar_centro->ubicacion=$request->ubicacion;
-        $guardar_centro->imagen=$request->imagen;
+        $guardar_centro->imagen=$ldate.$nombre;
         $guardar_centro->save();
         return response(["data"=>"guardado exitosamente"]);
     }

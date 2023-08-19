@@ -36,13 +36,15 @@ class MenuController extends Controller
      */
     public function store(Request $request)
     {
+
+        
         $guardar = [
             'idrestaurante' => 'required | string',
             'id_categoria' => 'required | string',
             'producto' => 'required | string',
             'is_menu_dia' => 'required | string',
             'precio' => 'required | integer',
-            'imagen_menu' => 'required | string',
+            'imagen_menu' => 'required | image',
             'descripcion' => 'required | string',
             
          ];
@@ -64,13 +66,19 @@ class MenuController extends Controller
             return response(['Error de los datos'=>$validator->errors()]);
         }
         else{
+
+            $ldate = date('Y-m-d-H_i_s');
+            $file = $request->file('imagen_menu');
+            $nombre = $file->getClientOriginalName();
+            \Storage::disk('local')->put("/img_menu/".$ldate.$nombre,  \File::get($file));
+
         $guardar_menu=new menu;
         $guardar_menu->idrestaurante=$request->idrestaurante;
         $guardar_menu->id_categoria=$request->id_categoria;
         $guardar_menu->producto=$request->producto;
         $guardar_menu->is_menu_dia=$request->is_menu_dia;
         $guardar_menu->precio=$request->precio;
-        $guardar_menu->imagen_menu=$request->imagen_menu;
+        $guardar_menu->imagen_menu=$request->$ldate.$nombre;
         $guardar_menu->descripcion=$request->descripcion;
         $guardar_menu->save();
         return response(["data"=>"guardado exitosamente"]);

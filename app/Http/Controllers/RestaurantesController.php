@@ -14,7 +14,10 @@ class RestaurantesController extends Controller
      */
     public function index()
     {
-        $consulta=restaurantes::all();
+        $consulta=DB::table("restaurantes")
+        ->select("restaurantes.*","centro_comerciales.nombre_centro_comercial")
+        ->join("centro_comerciales","centro_comerciales.id","=","restaurantes.id_centro_comercial")
+        ->get();
         return response ($consulta);
     }
 
@@ -39,7 +42,7 @@ class RestaurantesController extends Controller
         $guardar = [
             'id_centro_comercial' => 'required | string',
             'nombre_restaurante' => 'required | string',
-            'foto_baner' => 'required | string',
+           
             'descripcion' => 'required | string',
             'horario' => 'required | string',
             'ubicacion' => 'required | string',
@@ -52,7 +55,7 @@ class RestaurantesController extends Controller
          $messages = [
             'id_centro_comercial'  => 'The :attribute and :other must match.',
             'nombre_restaurante' => 'The :attribute value :input is not between :min - :max.',
-            'foto_baner'=> 'The :attribute must be one of the following types: :values',
+            
             'descripcion'=> 'The :attribute must be one of the following types: :values',
             'horario'=> 'The :attribute must be one of the following types: :values',
             'ubicacion'=> 'The :attribute must be one of the following types: :values',
@@ -70,10 +73,24 @@ class RestaurantesController extends Controller
             return response(['Error de los datos'=>$validator->errors()]);
         }
         else{
+
+            $ldate = date('Y-m-d-H_i_s');
+            $file = $request->file('foto_baner');
+            $nombre = $file->getClientOriginalName();
+            \Storage::disk('local')->put("/img_banner/".$ldate.$nombre,  \File::get($file));
+//
+            $file1 = $request->file('foto_principal');
+            $nombre1 = $file1->getClientOriginalName();
+            \Storage::disk('local')->put("/img_restaurantes/".$ldate.$nombre1,  \File::get($file1));
+            
+
         $guardar_restaurante=new restaurantes;
         $guardar_restaurante->id_centro_comercial=$request->id_centro_comercial;
         $guardar_restaurante->nombre_restaurante=$request->nombre_restaurante;
-        $guardar_restaurante->foto_baner=$request->foto_baner;
+
+        $guardar_restaurante->foto_baner=$ldate.$nombre;
+        $guardar_restaurante->foto_principal=$ldate.$nombre1;
+        
         $guardar_restaurante->descripcion=$request->descripcion;
         $guardar_restaurante->horario=$request->horario;
         $guardar_restaurante->ubicacion=$request->ubicacion;

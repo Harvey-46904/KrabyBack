@@ -34,4 +34,19 @@ Route::resource('restaurante','RestaurantesController',['except'=>['create','edi
 Route::resource('venta','VentasController',['except'=>['create','edit']]);
 Route::get('menurestaurante/{id}','RestaurantesController@cons_menu');
 Route::post('sesion','UsuarioController@inicioSesion');
+Route::post('registro_usuario','AuthController@register');
+Route::post('Login','AuthController@Login');
+
 Route::get('lista_restaurantes_centro_comercial/{id_centro_comercial}','RestaurantesController@lista_resutarantes_centro_comercial');
+Route::get('data/{carpeta}/{nombre}', function ($carpeta,$nombre) {
+    
+    $public_path = public_path();
+    $url = $public_path.'/storage/'.$carpeta."/".$nombre;// depende de root en el archivo filesystems.php.
+    //verificamos si el archivo existe y lo retornamos
+    return response()->file($url);
+        return response()->download($url);
+    
+    //si no se encuentra lanzamos un error 404.
+    abort(404);
+  
+  });
