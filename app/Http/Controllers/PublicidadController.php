@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Publicidad;
 use Illuminate\Http\Request;
-use Illuminate\support\Facades\Validator;
+use Validator;
 
 class PublicidadController extends Controller
 {

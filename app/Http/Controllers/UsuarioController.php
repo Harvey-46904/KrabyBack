@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 use DB;
 use App\Models\Usuario;
 use Illuminate\Http\Request;
-use Illuminate\support\Facades\Validator;
+use Validator;
 
 class UsuarioController extends Controller
 {

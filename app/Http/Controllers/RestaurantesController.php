@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\support\Facades\Validator;
+use Validator;
 use App\Models\restaurantes;
 use Illuminate\Http\Request;
 use DB;
