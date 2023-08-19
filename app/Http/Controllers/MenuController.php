@@ -70,7 +70,8 @@ class MenuController extends Controller
             $ldate = date('Y-m-d-H_i_s');
             $file = $request->file('imagen_menu');
             $nombre = $file->getClientOriginalName();
-            \Storage::disk('local')->put("/img_menu/".$ldate.$nombre,  \File::get($file));
+            $nombrefinal=$ldate.$nombre;
+            \Storage::disk('local')->put("/img_menu/". $nombrefinal,  \File::get($file));
 
         $guardar_menu=new menu;
         $guardar_menu->idrestaurante=$request->idrestaurante;
@@ -78,7 +79,7 @@ class MenuController extends Controller
         $guardar_menu->producto=$request->producto;
         $guardar_menu->is_menu_dia=$request->is_menu_dia;
         $guardar_menu->precio=$request->precio;
-        $guardar_menu->imagen_menu=$request->$ldate.$nombre;
+        $guardar_menu->imagen_menu= $nombrefinal;
         $guardar_menu->descripcion=$request->descripcion;
         $guardar_menu->save();
         return response(["data"=>"guardado exitosamente"]);
