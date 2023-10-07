@@ -97,7 +97,7 @@ class RestaurantesController extends Controller
        
         $guardar_restaurante->politicas=$request->politicas;
        $guardar_restaurante->save();
-        return response(["data"=>"guardado exitosamente"]);
+       return self::index();
     }
     }
 

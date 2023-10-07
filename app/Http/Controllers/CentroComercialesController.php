@@ -81,7 +81,7 @@ class CentroComercialesController extends Controller
         $guardar_centro->ubicacion=$request->ubicacion;
         $guardar_centro->imagen=$ldate.$nombre;
         $guardar_centro->save();
-        return response(["data"=>"guardado exitosamente"]);
+        return self::index();
     }
     
     }
