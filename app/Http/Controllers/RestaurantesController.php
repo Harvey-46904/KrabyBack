@@ -248,7 +248,7 @@ class RestaurantesController extends Controller
        
     }
     public function lista_resutarantes_centro_comercial($id_centro_comercial){
-        $consulta=DB::table("restaurantes")->select("id","nombre_restaurante","foto_baner","horario","descripcion")->where("id_centro_comercial","=",$id_centro_comercial)->get();
+        $consulta=DB::table("restaurantes")->select("id","nombre_restaurante","foto_baner","horario","descripcion","foto_principal")->where("id_centro_comercial","=",$id_centro_comercial)->get();
         return response($consulta);
     }
 }
