@@ -82,7 +82,7 @@ class MenuController extends Controller
         $guardar_menu->imagen_menu= $nombrefinal;
         $guardar_menu->descripcion=$request->descripcion;
         $guardar_menu->save();
-        return response(["data"=>"guardado exitosamente"]);
+        return self::index();
     }
     }
 

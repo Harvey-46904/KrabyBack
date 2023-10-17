@@ -218,10 +218,10 @@ class RestaurantesController extends Controller
         ->where("calificaciones.id_restaurante","=",$menu)
         ->avg('calificacion');
         //$promedio = DB::table('restaurantes')->avg('calificacion');
-        return response  ($menus);
+        //return response  ($menus);
         //return response ([$restauranMenus,count($menus)==0?"Menu No disponible":$menus,$descrip,count($comentario)==0?"Comentario No disponible":$comentario,$calificcion]);
 
-          /*  return response (
+           return response (
 
                 [[
                     $restauranMenus,
@@ -241,7 +241,7 @@ class RestaurantesController extends Controller
                     $calificcion
                 ]
                 ]
-            );*/
+            );
         
         
         
@@ -250,5 +250,15 @@ class RestaurantesController extends Controller
     public function lista_resutarantes_centro_comercial($id_centro_comercial){
         $consulta=DB::table("restaurantes")->select("id","nombre_restaurante","foto_baner","horario","descripcion","foto_principal")->where("id_centro_comercial","=",$id_centro_comercial)->get();
         return response($consulta);
+    }
+
+    public function informacion_total_restaurante($id){
+        
+        $restaurante=DB::table("restaurantes")
+        ->join("menus","menus.idrestaurante","=","restaurantes.id")
+        ->where("restaurantes.id","=",$id)
+       
+        ->get();
+        return response ($restaurante);
     }
 }

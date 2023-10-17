@@ -33,6 +33,7 @@ Route::resource('pedido','PedidosController',['except'=>['create','edit']]);
 Route::resource('restaurante','RestaurantesController',['except'=>['create','edit']]);
 Route::resource('venta','VentasController',['except'=>['create','edit']]);
 Route::get('menurestaurante/{id}','RestaurantesController@cons_menu');
+Route::get('informacion_restaurante_total/{id}','RestaurantesController@informacion_total_restaurante');
 Route::post('sesion','UsuarioController@inicioSesion');
 Route::post('registro_usuario','AuthController@register');
 Route::post('Login','AuthController@Login');
