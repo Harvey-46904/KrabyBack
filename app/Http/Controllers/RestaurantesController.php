@@ -218,7 +218,7 @@ class RestaurantesController extends Controller
         ->where("calificaciones.id_restaurante","=",$menu)
         ->avg('calificacion');
         //$promedio = DB::table('restaurantes')->avg('calificacion');
-        //return response  ($menus);
+        return response  ($menus);
         //return response ([$restauranMenus,count($menus)==0?"Menu No disponible":$menus,$descrip,count($comentario)==0?"Comentario No disponible":$comentario,$calificcion]);
 
            return response (
