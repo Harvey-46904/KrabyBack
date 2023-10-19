@@ -82,9 +82,23 @@ class MenuController extends Controller
         $guardar_menu->imagen_menu= $nombrefinal;
         $guardar_menu->descripcion=$request->descripcion;
         $guardar_menu->save();
-        return self::index();
+        return self::cons_menu($request->idrestaurante);
     }
     }
+
+
+
+    public function cons_menu ($id){
+        $menu =  $id;
+         $menus = DB::table('menus')->select("producto","imagen_menu", "precio", "id", "descripcion")
+         ->where("menus.idrestaurante","=",$menu)
+         ->get();
+        
+         //$promedio = DB::table('restaurantes')->avg('calificacion');
+         return response  ($menus);
+         //return response ([$restauranMenus,count($menus)==0?"Menu No disponible":$menus,$descrip,count($comentario)==0?"Comentario No disponible":$comentario,$calificcion]);
+ 
+     }
 
     /**
      * Display the specified resource.
