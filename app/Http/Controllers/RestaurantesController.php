@@ -198,7 +198,7 @@ class RestaurantesController extends Controller
        $restauranMenus = DB::table('restaurantes')->select("nombre_restaurante","foto_baner")
         ->where("restaurantes.id","=",$menu)
         ->get();
-        $menus = DB::table('menus')->select("producto","imagen_menu", "precio", "id", "descripcion")
+        $menus = DB::table('menus')->select("producto","imagen_menu", "precio", "id", "descripcion","nombre_categoria")
         ->where("menus.idrestaurante","=",$menu)
         ->get();
         $descrip = DB::table('restaurantes')->select("descripcion","horario","ubicacion")
@@ -260,5 +260,19 @@ class RestaurantesController extends Controller
        
         ->get();
         return response ($restaurante);
+    }
+
+    public function menu_categorizado($id_restaurante){
+        $productosPorCategoria = DB::table('menus')
+        ->orderBy('nombre_categoria')
+        ->orderBy('producto')
+        ->select('nombre_categoria', 'producto')
+        ->get()
+        ->groupBy('nombre_categoria')
+        ->map(function ($item) {
+            return $item->pluck('producto');
+        })
+        ->toArray();
+        return response($productosPorCategoria);
     }
 }

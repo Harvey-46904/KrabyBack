@@ -16,7 +16,7 @@ class CategoriasController extends Controller
     public function index()
     {
         $categoria = Categorias::all();
-        return response(['data'=>$categoria]);
+        return response($categoria);
     }
 
     /**
@@ -37,6 +37,7 @@ class CategoriasController extends Controller
      */
     public function store(Request $request)
     {
+       
         $rules = [
             
             'Nombre_categoria' => 'required|string',
@@ -52,10 +53,10 @@ class CategoriasController extends Controller
             return response ( [ 'Error de los datos'=>$validator->errors() ] );
         } else {
             $agregar_categoria = new Categorias;
-            
+            $agregar_categoria->restaurante_id = $request->idrestaurante;
             $agregar_categoria->Nombre_categoria = $request->Nombre_categoria;
             $agregar_categoria->save();
-            return response( [ 'data'=>'Agregado exitosamente' ] );
+            return self::index();
         }
     }
 

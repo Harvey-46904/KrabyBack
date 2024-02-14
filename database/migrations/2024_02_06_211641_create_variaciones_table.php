@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCategoriasTable extends Migration
+class CreateVariacionesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,12 @@ class CreateCategoriasTable extends Migration
      */
     public function up()
     {
-        Schema::create('categorias', function (Blueprint $table) {
+        Schema::create('variaciones', function (Blueprint $table) {
             $table->id();
-            $table->string("Nombre_categoria");        
+            $table->unsignedBigInteger('menus_id');
+            $table->foreign('menus_id')->references('id')->on('menus')->onDelete('cascade');
+            $table->string("nombre_variacion");
+            $table->json("opciones");
             $table->timestamps();
         });
     }
@@ -27,6 +30,6 @@ class CreateCategoriasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('categorias');
+        Schema::dropIfExists('variaciones');
     }
 }

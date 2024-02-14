@@ -22,7 +22,6 @@ class CreateRestaurantesTable extends Migration
             $table->string("descripcion");
             $table->string("horario");
             $table->string("ubicacion");
-           
             $table->string("politicas");
             $table->timestamps();
         });

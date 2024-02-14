@@ -18,27 +18,16 @@ class AuthController extends Controller
         return response($consulta);
     }
 
-    public function register(Request $request){
+    public function register($nombre,$email,$password){
 
         //return response(["data"=> Str::random(8)]);
-        $validator= Validator::make($request->all(),[
-            'Nombre_completo'=>'required|string|max:255',
-            'email'=>'required|string|email|max:255|unique:users',
-            'contrasena'=>'required|string',
-        ]);
+      
         
-        if($validator->fails()){
-            return response()->json($validator->errors());
-        }
-
-        $password=NULL;
-        $randomPassword = Str::random(8);
-        $password = 'ADW_' . $randomPassword;
       
         $user =User::create([
-            'name'=>$request->Nombre_completo,
-            'email'=>$request->email,
-            'password'=>Hash::make($request->contrasena)
+            'name'=>$nombre,
+            'email'=>$email,
+            'password'=>Hash::make($password)
         ]);
        
 
@@ -52,7 +41,7 @@ class AuthController extends Controller
     public function Login(Request $request){
         
         if (!Auth::attempt($request->only('email','password'))){
-            return response()->json(['status' => 'Unauthorized']);
+            return response()->json(['status' => 'usuario o contraseña incorrecto']);
         }
     
         $user = User::where('email', $request['email'])->firstOrFail();

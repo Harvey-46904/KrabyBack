@@ -16,7 +16,7 @@ class PublicidadController extends Controller
     public function index()
     {
         $publicidad = Publicidad::all();
-        return response(['data'=>$publicidad]);
+        return response ($publicidad);
     }
 
     /**
@@ -37,26 +37,20 @@ class PublicidadController extends Controller
      */
     public function store(Request $request)
     {
-        $rules = [
-            
-            'Nombre_publicidad' => 'required|string',
-        ];
+      
 
-        $messages = [
             
-            'Nombre_publicidad.required' => 'Digité nombre publicidad',
-        ];
+            $ldate = date('Y-m-d-H_i_s');
+            $file = $request->file('Nombre_publicidad');
+            $nombre = $file->getClientOriginalName();
+            \Storage::disk('local')->put("/img_publicidad/".$ldate.$nombre,  \File::get($file));
 
-        $validator = Validator::make( $request->all(), $rules, $messages );
-        if ( $validator->fails() ) {
-            return response ( [ 'Error de los datos'=>$validator->errors() ] );
-        } else {
             $agregar_publicidad = new Publicidad;
            
-            $agregar_publicidad->Nombre_publicidad = $request->Nombre_publicidad;
+            $agregar_publicidad->Nombre_publicidad = $ldate.$nombre;
             $agregar_publicidad->save();
-            return response( [ 'data'=>'Agregado exitosamente' ] );
-        }
+            return self::index();
+        
     }
 
     /**
@@ -123,6 +117,6 @@ class PublicidadController extends Controller
     {
         $publicidad = Publicidad::findOrFail($publicidad);
         $publicidad->delete();
-        return response( [ 'data'=> 'Eliminado exitosamente' ] );
+        return self::index();
     }
 }
