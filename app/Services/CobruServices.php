@@ -6,13 +6,15 @@ use App\Traits\ConsumesExternalServices;
 class CobruServices{
     use ConsumesExternalServices;
     protected $baseUri;
-    protected $token;
+    protected $cobru_token;
     protected $refresh;
+    protected $xapikey;
 
     public function __construct(){
         $this->baseUri=config("services.cobru.base_uri");
-        $this->token=config("services.cobru.token");
+        $this->cobru_token=config("services.cobru.cobru_token");
         $this->refresh=config("services.cobru.refresh");
+        $this->xapikey=config("services.cobru.xapikey");
     }
 
    public function resolveAuthorization(&$queryParams, &$formParams,&$headers){
@@ -20,6 +22,8 @@ class CobruServices{
    }
    public function resolverAccesoToken(){
     $refrescado=$this->refresh;
+    $keysapi= $this->xapikey;
+
     $client = new \GuzzleHttp\Client();
     $response = $client->request('POST', 'https://dev.cobru.co/token/refresh/', [
           'body' => '{
@@ -28,38 +32,79 @@ class CobruServices{
           'headers' => [
             'Accept' => 'application/json',
             'Content-Type' => 'application/json',
-            'x-api-key' => '12212215',
+            'x-api-key' =>  "'.$keysapi.'",
           ],
         ]);
         $data = json_decode($response->getBody(), true);
 
     // Acceder al valor de 'access'
     $accessToken = $data['access'];
-    return  $accessToken;
+    return "Bearer ".$accessToken;
    }
 
 
    public function crear_cobru($valor){
     $client = new \GuzzleHttp\Client();
-
-    $response = $client->request('POST', 'https://dev.cobru.co/cobru/', [
+    $response = $client->request('POST', $this->baseUri.'/cobru/', [
         'body' => '{
-        "amount": 50000,
+        "amount":"'.$valor.'",
         "platform": "API",
-        "description": "Venta de zapatos rojos",
-        "expiration_days": 7,
+        "description": "Pagos Kraby",
+        "expiration_days": 1,
         "payment_method_enabled": "{\\"NEQUI\\":true,\\"pse\\":true,\\"efecty\\":true,\\"credit_card\\": true}"
       }',
         'headers' => [
           'Accept' => 'application/json',
           'Authorization' => $this->resolverAccesoToken(),
           'Content-Type' => 'application/json',
-          'x-api-key' => '12212215',
+          'x-api-key' => $this->xapikey,
         ],
       ]);
-      
-    echo $response->getBody();
+      $responseBody = $response->getBody();
+      $data = json_decode($responseBody, true);
+      return $data;
    }
+public function push_nequi($uri){
+  $client = new \GuzzleHttp\Client();
+  $response = $client->request('POST', $this->baseUri.'/'.$uri, [
+    'body' => '{
+    "name": "Harvey Riascos",
+    "payment": "NEQUI",
+    "cc": "1085330718",
+    "email": "harveympv@hotmail.com",
+    "phone": "3226755570",
+    "document_type": "CC",
+    "phone_nequi": "3226755570",
+    "push": true
+    
+  }',
+    'headers' => [
+      'Accept' => 'application/json',
+      'Authorization' => $this->resolverAccesoToken(),
+      'Content-Type' => 'application/json',
+      'x-api-key' => $this->xapikey,
+    ],
+  ]);
+  echo $response->getBody();
+
+
+
+}
+public function detalle_pago($uri){
+  $client = new \GuzzleHttp\Client();
+  $response = $client->request('GET', $this->baseUri.'/cobru_detail/'.$uri, [
+    'headers' => [
+      'Accept' => 'application/json',
+      'Authorization' => $this->resolverAccesoToken(),
+      'Content-Type' => 'application/json',
+      'x-api-key' => $this->xapikey,
+    ],
+  ]);
+  echo $response->getBody();
+
+}
+
+
 
    public function decodeResponse($response){
     return json_decode($response);

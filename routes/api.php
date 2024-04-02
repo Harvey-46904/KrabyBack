@@ -46,7 +46,9 @@ Route::get('configuracion_restaurante_app/{id}','MenuController@configuracion_re
 Route::get('lista_restaurantes_centro_comercial/{id_centro_comercial}','RestaurantesController@lista_resutarantes_centro_comercial');
 Route::get('filtrado/{id}','VariacionesController@filtrado');
 
-
+//cobrus
+Route::post('crear_nueva_orden','PagosController@crear_orden');
+Route::post('pagar_nequi','PagosController@pago_nequi');
 
 Route::get('data/{carpeta}/{nombre}', function ($carpeta,$nombre) {
     

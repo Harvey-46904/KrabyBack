@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Pagos;
 use Illuminate\Http\Request;
 use Validator;
-
+use App\Services\CobruServices;
+use DB;
 class PagosController extends Controller
 {
     /**
@@ -138,5 +139,42 @@ class PagosController extends Controller
         $pagos = Pagos::findOrFail($pagos);
         $pagos->delete();
         return response( [ 'data'=> 'Eliminado exitosamente' ] );
+    }
+
+    public function crear_orden(Request $request,CobruServices $cobru){
+        //generar cobru
+      
+        $datos=$cobru->crear_cobru($request->subtotal);
+        
+        $data = [
+            'pk' => $datos["pk"],
+            'amount' => $datos["amount"],
+            'state' => $datos["state"],
+            'date_created' => $datos["date_created"],
+            'payment_method' => $datos["payment_method"],
+            'url' => $datos["url"],
+            'owner' => $datos["owner"],
+            'payed_amount' => $datos["payed_amount"],
+            'description' => "Pago Kraby",
+            'payment_method_enabled' => $datos["payment_method_enabled"],
+            'expiration_days' => $datos["expiration_days"],
+            'fee_amount' =>$datos["fee_amount"],
+            'iva_amount' => $datos["iva_amount"],
+            'platform' => $datos["platform"],
+            'carrito' => '{"producto1": "descripcion producto 1", "producto2": "descripcion producto 2"}'
+        ];
+            
+           
+            DB::table('pedidos')->insert($data);
+
+            return response($data);
+          
+       // return response();
+    }
+
+    public function pago_nequi(Request $request,CobruServices $cobru){
+
+        $uri=$request->urlcobru;
+        return response($cobru->push_nequi($uri));
     }
 }

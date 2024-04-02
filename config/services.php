@@ -31,9 +31,11 @@ return [
     ],
     'cobru'=>[
         'base_uri'=>env("COBRU_URI"),
-        'token'=>env("s3HH3iuL"),
+        'cobru_token'=>env("COBRU_TOKEN"),
         'refresh'=>env("REFRESH"),
-
+        'xapikey'=>env("X_API_KEY"),
+       
+       
     ],
 
 ];
